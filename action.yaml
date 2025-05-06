@@ -16,6 +16,10 @@ inputs:
   aws_region:
     description: 'AWS Region'
     required: true
+  aws_endpoint:
+    description: 'AWS endpoint'
+    required: false
+    default: 'https://ec2.amazonaws.com'
   aws_iam_role_arn:
     description: 'ARN of IAM role to assume'
     required: false
