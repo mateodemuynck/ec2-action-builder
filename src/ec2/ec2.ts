@@ -12,7 +12,6 @@ import {
 import { STS } from "@aws-sdk/client-sts";
 import * as core from "@actions/core";
 import { UserData } from "./userdata";
-import { Ec2Pricing } from "./pricing";
 import {VolumeType} from "@aws-sdk/client-ec2/dist-types/models/models_1";
 import { NodeHttpHandler } from "@smithy/node-http-handler";
 import * as https from "https";
@@ -273,10 +272,7 @@ export class Ec2Instance {
   }
 
   async bestSpotSizeForOnDemandPrice(instanceType: string) {
-    const ec2Pricing = new Ec2Pricing(this.config);
-    const currentOnDemandPrice = await ec2Pricing.getPriceForInstanceTypeUSD(
-      instanceType ? instanceType : this.config.ec2InstanceType
-    );
+    const currentOnDemandPrice = 0;
     var previousInstanceType = this.config.ec2InstanceType;
     var bestInstanceType = this.config.ec2InstanceType;
     do {
@@ -300,9 +296,7 @@ export class Ec2Instance {
   }
 
   async getInstanceConfiguration(ec2SpotInstanceStrategy: string) {
-    const ec2Pricing = new Ec2Pricing(this.config);
-    const currentInstanceTypePrice =
-      await ec2Pricing.getPriceForInstanceTypeUSD(this.config.ec2InstanceType);
+    const currentInstanceTypePrice = 0;
 
     const userData = new UserData(this.config);
 
