@@ -7,6 +7,7 @@ export interface ConfigInterface {
   awsSessionToken: string;
   awsRegion: string;
   awsEndpoint: string;
+  awsIgnoreSslErrors: boolean;
   awsIamRoleArn: string;
   awsAssumeRole: boolean;
 
@@ -39,6 +40,7 @@ export class ActionConfig implements ConfigInterface {
   awsSessionToken: string;
   awsRegion: string;
   awsEndpoint: string;
+  awsIgnoreSslErrors: boolean;
   awsIamRoleArn: string;
   awsAssumeRole: boolean;
 
@@ -71,6 +73,7 @@ export class ActionConfig implements ConfigInterface {
     this.awsSessionToken = core.getInput("aws_session_token");
     this.awsRegion = core.getInput("aws_region");
     this.awsEndpoint = core.getInput("aws_endpoint");
+    this.awsIgnoreSslErrors = core.getInput("aws_ignore_ssl_errors") === "true";
     this.awsIamRoleArn = core.getInput("aws_iam_role_arn");
     this.awsAssumeRole = this.awsIamRoleArn ? true : false;
 

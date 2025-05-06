@@ -20,6 +20,9 @@ inputs:
     description: 'AWS endpoint'
     required: false
     default: 'https://ec2.amazonaws.com'
+  aws_ignore_ssl_errors:
+    description: 'Ignore SSL errors'
+    required: false
   aws_iam_role_arn:
     description: 'ARN of IAM role to assume'
     required: false

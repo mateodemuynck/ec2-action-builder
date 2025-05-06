@@ -4,6 +4,8 @@ import { STS } from "@aws-sdk/client-sts";
 import { ConfigInterface } from "../config/config";
 import { findValuesHelper } from "../utils/utils";
 import * as core from "@actions/core";
+import { NodeHttpHandler } from "@smithy/node-http-handler";
+import * as https from "https";
 
 export class Ec2Pricing {
   config: ConfigInterface;
@@ -20,10 +22,17 @@ export class Ec2Pricing {
       sessionToken: this.config.awsSessionToken,
     };
 
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: this.config.awsIgnoreSslErrors,
+    });
+
     this.client = new Pricing({
       credentials: this.credentials,
       region: "us-east-1",
       endpoint: this.config.awsEndpoint,
+      requestHandler: new NodeHttpHandler({
+        httpsAgent: httpsAgent,
+      }),
     });
   }
 
@@ -31,10 +40,16 @@ export class Ec2Pricing {
     if (!this.assumedRole && this.config.awsAssumeRole) {
       this.assumedRole = !this.assumedRole;
       const credentials = await this.getCrossAccountCredentials();
+      const httpsAgent = new https.Agent({
+        rejectUnauthorized: this.config.awsIgnoreSslErrors,
+      });
       this.client = new Pricing({
         credentials: credentials,
         region: "us-east-1",
         endpoint: this.config.awsEndpoint,
+        requestHandler: new NodeHttpHandler({
+          httpsAgent: httpsAgent,
+        }),
       });
     }
     return this.client;
@@ -50,10 +65,17 @@ export class Ec2Pricing {
       return Object.assign(this.credentials);
     }
 
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: this.config.awsIgnoreSslErrors,
+    });
+
     const stsClient = new STS({
       credentials: this.credentials,
       region: this.config.awsRegion,
       endpoint: this.config.awsEndpoint,
+      requestHandler: new NodeHttpHandler({
+        httpsAgent: httpsAgent,
+      }),
     });
 
     const timestamp = new Date().getTime();
