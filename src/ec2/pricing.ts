@@ -23,6 +23,7 @@ export class Ec2Pricing {
     this.client = new Pricing({
       credentials: this.credentials,
       region: "us-east-1",
+      endpoint: this.config.awsEndpoint === "" ? "https://ec2.amazonaws.com" : this.config.awsEndpoint,
     });
   }
 
@@ -33,6 +34,7 @@ export class Ec2Pricing {
       this.client = new Pricing({
         credentials: credentials,
         region: "us-east-1",
+        endpoint: this.config.awsEndpoint === "" ? "https://ec2.amazonaws.com" : this.config.awsEndpoint,
       });
     }
     return this.client;
@@ -51,6 +53,7 @@ export class Ec2Pricing {
     const stsClient = new STS({
       credentials: this.credentials,
       region: this.config.awsRegion,
+      endpoint: this.config.awsEndpoint === "" ? "https://ec2.amazonaws.com" : this.config.awsEndpoint,
     });
 
     const timestamp = new Date().getTime();

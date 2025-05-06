@@ -6,6 +6,7 @@ export interface ConfigInterface {
   awsSecretAccessKey: string;
   awsSessionToken: string;
   awsRegion: string;
+  awsEndpoint: string;
   awsIamRoleArn: string;
   awsAssumeRole: boolean;
 
@@ -37,6 +38,7 @@ export class ActionConfig implements ConfigInterface {
   awsSecretAccessKey: string;
   awsSessionToken: string;
   awsRegion: string;
+  awsEndpoint: string;
   awsIamRoleArn: string;
   awsAssumeRole: boolean;
 
@@ -68,6 +70,7 @@ export class ActionConfig implements ConfigInterface {
     this.awsSecretAccessKey = core.getInput("aws_secret_access_key");
     this.awsSessionToken = core.getInput("aws_session_token");
     this.awsRegion = core.getInput("aws_region");
+    this.awsEndpoint = core.getInput("aws_endpoint");
     this.awsIamRoleArn = core.getInput("aws_iam_role_arn");
     this.awsAssumeRole = this.awsIamRoleArn ? true : false;
 

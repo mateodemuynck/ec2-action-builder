@@ -48,6 +48,7 @@ export class Ec2Instance {
     this.client = new EC2({
       credentials: this.credentials,
       region: this.config.awsRegion,
+      endpoint: this.config.awsEndpoint === "" ? "https://ec2.amazonaws.com" : this.config.awsEndpoint,
     });
 
     this.tags = this.getTags();
@@ -60,6 +61,7 @@ export class Ec2Instance {
       this.client = new EC2({
         credentials: credentials,
         region: this.config.awsRegion,
+        endpoint: this.config.awsEndpoint === "" ? "https://ec2.amazonaws.com" : this.config.awsEndpoint,
       });
     }
     return this.client;
